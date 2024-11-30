@@ -1,24 +1,55 @@
-// CreateProduct.tsx
+// ProductsForm.tsx
 
-"use client"; // Ensure the component is client-side rendered
+import React, { useState } from "react";
 
-import ProductsForm from "@/components/products/ProductsForm";
-
-const CreateProduct = () => {
-  const handleProductSubmit = (productData: {
+interface ProductsFormProps {
+  onSubmit: (productData: {
     name: string;
     description: string;
     price: number;
     quantity: number;
-  }) => {
-    // Handle the product data submission, e.g., send to API or manage state
-    console.log(productData);
-    // You can send this data to a server or use it in another part of your app.
+  }) => void;
+}
+
+const ProductsForm: React.FC<ProductsFormProps> = ({ onSubmit }) => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState<number>(0);
+  const [quantity, setQuantity] = useState<number>(0);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit({ name, description, price, quantity }); // Pass the data on submit
   };
 
-  return <ProductsForm onSubmit={handleProductSubmit} />;
-
-
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Product Name"
+      />
+      <textarea
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        placeholder="Product Description"
+      />
+      <input
+        type="number"
+        value={price}
+        onChange={(e) => setPrice(Number(e.target.value))}
+        placeholder="Product Price"
+      />
+      <input
+        type="number"
+        value={quantity}
+        onChange={(e) => setQuantity(Number(e.target.value))}
+        placeholder="Product Quantity"
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
 };
 
-export default CreateProduct;
+export default ProductsForm;

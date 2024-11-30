@@ -1,22 +1,36 @@
-// CreateShop.tsx
+// ShopForm.tsx
+"use client";
+import React, { useState } from "react";
 
-"use client"; // Add this line here as well
+interface ShopFormProps {
+  onSubmit: (shopData: { name: string; description: string }) => void;
+}
 
-import ShopForm from "@/components/shops/new/ShopForm";
+const ShopForm: React.FC<ShopFormProps> = ({ onSubmit }) => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
-// This will make sure CreateShop is a Client Component as well.
-const CreateShop = () => {
-  const handleShopSubmit = (shopData: {
-    name: string;
-    description: string;
-    logo: string | null;
-  }) => {
-    // Handle the data submission
-    console.log(shopData);
-    // You can send this data to a server or use it in another part of your app.
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit({ name, description }); // Only pass name and description
   };
 
-  return <ShopForm onSubmit={handleShopSubmit} />;
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Shop Name"
+      />
+      <textarea
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        placeholder="Shop Description"
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
 };
 
-export default CreateShop;
+export default ShopForm;
