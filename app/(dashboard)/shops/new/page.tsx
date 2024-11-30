@@ -1,4 +1,4 @@
-/*"use client"; // Ensure the component is client-side rendered
+"use client"; // Ensure the component is client-side rendered
 
 import ShopForm from "@/components/shops/new/ShopForm";
 
@@ -37,4 +37,3 @@ const CreateShop = () => {
 };
 
 export default CreateShop;
-*/

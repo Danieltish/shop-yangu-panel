@@ -1,4 +1,4 @@
-// ProductsForm.tsx
+/*
 "use client";
 import React, { useState } from "react";
 
@@ -53,3 +53,4 @@ const ProductsForm: React.FC<ProductsFormProps> = ({ onSubmit }) => {
 };
 
 export default ProductsForm;
+*/
