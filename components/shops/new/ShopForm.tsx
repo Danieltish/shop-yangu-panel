@@ -20,7 +20,12 @@ const formSchema = z.object({
   description: z.string().min(2).max(500).trim(),
 });
 
-const ShopForm = () => {
+// Accept onSubmit as a prop
+interface ShopFormProps {
+  onSubmit: (values: z.infer<typeof formSchema>) => void;
+}
+
+const ShopForm: React.FC<ShopFormProps> = ({ onSubmit }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -28,34 +33,6 @@ const ShopForm = () => {
       description: "",
     },
   });
-
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const shopData = {
-      name: values.name,
-      description: values.description,
-    };
-
-    // Send a POST request to the json-server endpoint (http://localhost:5000/shops)
-    try {
-      const response = await fetch("http://localhost:5000/shops", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(shopData), // Convert object to JSON without logo
-      });
-
-      if (response.ok) {
-        console.log("Shop created successfully!");
-        // Redirect to the dashboard or homepage
-        window.location.href = "http://localhost:3000/"; // Update to redirect to the desired location
-      } else {
-        console.error("Failed to create shop");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
   return (
     <div className="p-10">
